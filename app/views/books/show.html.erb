@@ -1,0 +1,16 @@
+<h2>Title: <%= @book.title %></h2>
+<h4>Author: <%= @book.author %></h2>
+<h5>Description: <br><%= @book.description %></h2>
+<br>
+<% if user_signed_in? && current_user != @book.user %>
+  <%= render "reviews/form" %> 
+<% end %>
+
+<h2>Book Reviews</h2>
+<% @book.reviews.each do |review| %>
+    <h4>Rating: <%= review.rating %></h4>
+    <h4>Comment: <%= review.comment %></h4>
+    <br>
+<% end %>
+
+
