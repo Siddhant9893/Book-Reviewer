@@ -1,7 +1,18 @@
 Rails.application.routes.draw do
+  get "permissions/create"
+  get "permissions/approve"
+  get "permissions/reject"
   devise_for :users
 resources :books do 
-  resources :reviews, only: [ :create, :destroy ]
+  resources :reviews, only: [ :create]
+  resources :permissions, only: [:create]
+end
+
+resources :permissions, only: [:create] do
+  member do
+    patch :approve
+    patch :reject
+end
 end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

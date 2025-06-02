@@ -2,13 +2,17 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   
   def index
-    @books=Book.order(created_at: :desc).page(params[:page]).per(3)
+    @books=Book.includes(:user, :permissions).order(created_at: :desc).page(params[:page]).per(3)
   end
 
   def show
     @book=Book.find(params[:id])
+    if @book.user==current_user || Permission.exists?(user: current_user,book: @book,status: 'approved')
     @review=@book.reviews.build
     @reviews = @book.reviews
+    else 
+      redirect_to books_path, alert: "you need permission to view book"
+    end
   end
 
   def new
