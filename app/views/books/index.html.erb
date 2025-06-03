@@ -17,9 +17,10 @@
 
 <% if user_signed_in? %>
 <% if book.user==current_user %>
-
- 
-<%= link_to "View Book", book_path(book) %>
+<%= link_to "View Book", book_path(book) %><br>
+<% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>
+<h2>Request Approved</h2>
+<%= link_to "View Book", book_path(book) %><hr>
 <% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>
 <h2>Request Pending</h2>
 <% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>

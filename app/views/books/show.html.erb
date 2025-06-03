@@ -13,6 +13,15 @@
     <br>
 <% end %>
 
+<% if current_user == @book.user %>
+<h2><b> Pending Requests <b></h2>
+<% @book.permissions.where(status: 'pending').each do |permission| %>
+  <h4>User: <%= permission.user.email %></h4>
+  <%= button_to "Approve", approve_permission_path(permission),method: :patch %><br>
+  <%= button_to "Reject", reject_permission_path(permission),method: :patch %>
+  <% end %>
+<% end %>
+
 
 
 
