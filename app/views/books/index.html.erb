@@ -12,7 +12,9 @@
 <% @books.each do |book| %>
     <h2>Title: <%= link_to book.title, book_path(book) %></h2>
     <h4>Author: <%= book.author %></h2>
-    <h5><b>Description: <b> <%= book.description %></h2>
+    <h5><b>Description: <b> <%= book.description %></h2>   
+
+       
 
 
 <% if user_signed_in? %>
