@@ -7,7 +7,7 @@
 <% if user_signed_in? %>
 <h2><%= link_to "Add Book",new_book_path %></h2>
 <% end %>
-
+   
 
 <% @books.each do |book| %>
     <h2>Title: <%= link_to book.title, book_path(book) %></h2>
@@ -16,22 +16,21 @@
 
 
 <% if user_signed_in? %>
-<% if book.user==current_user %>
-<%= link_to "View Book", book_path(book) %><br>
-<% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>
-<h2>Request Approved</h2>
-<%= link_to "View Book", book_path(book) %><hr>
-<% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>
-<h2>Request Pending</h2>
-<% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>
-<h2>Request Rejected</h2>
-<% else %>
-<%= button_to "Request Access", book_permissions_path(book), method: :post %>
-<% end %>
-<% else %>
-<%= link_to "Login to request access", new_user_session_path %>
-<% end %>
-
+  <% if book.user==current_user %>
+    <%= link_to "View Book", book_path(book) %><br>
+  <% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>
+    <h2>Request Approved</h2>
+    <%= link_to "View Book", book_path(book) %><hr>
+  <% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>
+    <h2>Request Pending</h2>
+  <% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>
+    <h2>Request Rejected</h2>
+  <% else %>
+    <%= button_to "Request Access", book_permissions_path(book), method: :post %>
+  <% end %>
+  <% else %>
+  <%= link_to "Login to request access", new_user_session_path %>
+  <% end %>
 <% end %>
 
 
