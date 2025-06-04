@@ -1,3 +1,7 @@
+<div class="container">
+ <div class="row justify-content-center">
+   <div class="col-5">
+     <div class="mt-3">
 <%= form_with model:@book do |form| %>
     <%= form.label :title %>
     <%= form.text_field :title %>
@@ -12,3 +16,5 @@
     <% end %>
 
 <%= button_to "Delete", @book, method: :delete %>
+
+</div>

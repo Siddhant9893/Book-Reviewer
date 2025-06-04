@@ -3,4 +3,5 @@ class Book < ApplicationRecord
     has_many :reviews, dependent: :destroy
     belongs_to :user
     has_many :permissions, dependent: :destroy
+    has_one_attached :pdf
 end

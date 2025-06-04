@@ -1,0 +1,76 @@
+[1mdiff --git a/app/controllers/permissions_controller.rb b/app/controllers/permissions_controller.rb[m
+[1mindex 4e18f73..3ee2efb 100644[m
+[1m--- a/app/controllers/permissions_controller.rb[m
+[1m+++ b/app/controllers/permissions_controller.rb[m
+[36m@@ -2,8 +2,10 @@[m [mclass PermissionsController < ApplicationController[m
+ before_action :authenticate_user![m
+   def create[m
+     @book=Book.find(params[:book_id])[m
+[31m-[m
+[31m-    [m
+[32m+[m[32m    if @book.user == current_user[m
+[32m+[m[32m    redirect_to book_path(@book), alert: "You are the owner of this book!"[m
+[32m+[m[32m    return[m
+[32m+[m[32m    end[m
+     permission=current_user.permissions.find_or_initialize_by(book:@book)[m
+     permission.status ="pending"[m
+     if permission.save [m
+[1mdiff --git a/app/views/books/index.html.erb b/app/views/books/index.html.erb[m
+[1mindex 0bcd4ef..00847ae 100644[m
+[1m--- a/app/views/books/index.html.erb[m
+[1m+++ b/app/views/books/index.html.erb[m
+[36m@@ -16,22 +16,21 @@[m
+ [m
+ [m
+ <% if user_signed_in? %>[m
+[31m-<% if book.user==current_user %>[m
+[31m-<%= link_to "View Book", book_path(book) %><br>[m
+[31m-<% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>[m
+[31m-<h2>Request Approved</h2>[m
+[31m-<%= link_to "View Book", book_path(book) %><hr>[m
+[31m-<% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>[m
+[31m-<h2>Request Pending</h2>[m
+[31m-<% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>[m
+[31m-<h2>Request Rejected</h2>[m
+[31m-<% else %>[m
+[31m-<%= button_to "Request Access", book_permissions_path(book), method: :post %>[m
+[31m-<% end %>[m
+[31m-<% else %>[m
+[31m-<%= link_to "Login to request access", new_user_session_path %>[m
+[31m-<% end %>[m
+[31m-[m
+[32m+[m[32m  <% if book.user==current_user %>[m
+[32m+[m[32m    <%= link_to "View Book", book_path(book) %><br>[m
+[32m+[m[32m  <% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>[m
+[32m+[m[32m    <h2>Request Approved</h2>[m
+[32m+[m[32m    <%= link_to "View Book", book_path(book) %><hr>[m
+[32m+[m[32m  <% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>[m
+[32m+[m[32m    <h2>Request Pending</h2>[m
+[32m+[m[32m  <% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>[m
+[32m+[m[32m    <h2>Request Rejected</h2>[m
+[32m+[m[32m  <% else %>[m
+[32m+[m[32m    <%= button_to "Request Access", book_permissions_path(book), method: :post %>[m
+[32m+[m[32m  <% end %>[m
+[32m+[m[32m  <% else %>[m
+[32m+[m[32m  <%= link_to "Login to request access", new_user_session_path %>[m
+[32m+[m[32m  <% end %>[m
+ <% end %>[m
+ [m
+ [m
+[1mdiff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb[m
+[1mindex e02c257..0581250 100644[m
+[1m--- a/app/views/layouts/application.html.erb[m
+[1m+++ b/app/views/layouts/application.html.erb[m
+[36m@@ -24,6 +24,12 @@[m
+   </head>[m
+ [m
+   <body>[m
+[32m+[m[32m  <% if notice %>[m
+[32m+[m[32m    <p class="notice"><%= notice %></p>[m
+[32m+[m[32m  <% elsif alert %>[m
+[32m+[m[32m    <p class="alert"><%= alert %></p>[m
+[32m+[m[32m  <% end %>[m
+[32m+[m[41m  [m
+     <%= yield %>[m
+   </body>[m
+ </html>[m

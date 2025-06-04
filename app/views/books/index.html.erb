@@ -1,46 +1,62 @@
 <%if user_signed_in? %>
 <h4>Logged in as <%= link_to current_user.email,current_user.email %></h4>
 <% end %>
-
-<h1>Books</h1>
+<div class="container text-center">
+<h1>Books</h1><br><br>
 
 <% if user_signed_in? %>
 <h2><%= link_to "Add Book",new_book_path %></h2>
 <% end %>
    
-
+<div class="row p-4">
 <% @books.each do |book| %>
-    <h2>Title: <%= link_to book.title, book_path(book) %></h2>
-    <h4>Author: <%= book.author %></h2>
-    <h5><b>Description: <b> <%= book.description %></h2>
-
+    <div class="col-md-3 mb-4">
+      <div class="card h-100" style="width: 18rem;">
+      
+        <div class="card-body">
+    <%= link_to book_path(book), class: "text-decoration-none" do %>
+      <h2 class="card-title"><%= book.title %></h2>
+      <h4 class="card-subtitle mb-2 text-muted">Author: <%= book.author %></h4>
+      <p class="card-text"><strong>Description:</strong> <%= book.description %></p>
+    <% end %>
 
 <% if user_signed_in? %>
   <% if book.user==current_user %>
     <%= link_to "View Book", book_path(book) %><br>
   <% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>
-    <h2>Request Approved</h2>
+    <h2 class="text-success mt-2">Request Approved</h2>
     <%= link_to "View Book", book_path(book) %><hr>
   <% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>
-    <h2>Request Pending</h2>
+    <h2 class="text-warning mt-2">Request Pending</h2>
   <% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>
-    <h2>Request Rejected</h2>
+    <h2 class="text-danger mt-2">Request Rejected</h2>
+
   <% else %>
     <%= button_to "Request Access", book_permissions_path(book), method: :post %>
   <% end %>
+
   <% else %>
-  <%= link_to "Login to request access", new_user_session_path %>
+    <div class="btn btn-light" >
+      <%= link_to "Login to request access", new_user_session_path, style: "color: black;" %>
+    </div>
   <% end %>
-<% end %>
+         </div>
+      </div>  
+   </div>
+  <% end  %>
+</div>
 
 
 
 <% if user_signed_in? %>
-<%= link_to "Log Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+<%= button_to "Log Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
 
 <% else %>
-  <h3><%= link_to "Login", new_user_session_path %></h3>
-  <h3><%= link_to "Sign Up", new_user_registration_path %></h3>
+
+<div class="d-grid gap-2 d-md-block">
+  <h3><%= link_to "Login", new_user_session_path, class: "btn btn-secondary", style: "color: black;"  %></h3>
+  <h3><%= link_to "Sign Up", new_user_registration_path, class: "btn btn-secondary", style: "color: black;" %></h3>
+</div>
 <% end %>
 <br>
 

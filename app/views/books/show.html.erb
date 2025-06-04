@@ -1,6 +1,14 @@
+<div class="container">
+ <div class="row justify-content-center">
+   <div class="col-5">
+     <div class="mt-5">
 <h2>Title: <%= @book.title %></h2>
 <h4>Author: <%= @book.author %></h2>
 <h5>Description: <br><%= @book.description %></h2>
+<% if @book.pdf.attached? %>
+  <%= link_to "View PDF", url_for(@book.pdf), target: "_blank"%>
+<% end %>
+
 <br>
 <% if user_signed_in? && current_user != @book.user %>
   <%= render "reviews/form" %> 
@@ -14,12 +22,14 @@
 <% end %>
 
 <% if current_user == @book.user %>
-<h2><b> Pending Requests <b></h2>
+<%= link_to "Edit Book",edit_book_path,class: "btn btn-primary btn-sm mt-2" %>
 <% @book.permissions.where(status: 'pending').each do |permission| %>
+  <h2><b> Pending Requests <b></h2>
   <h4>User: <%= permission.user.email %></h4>
-  <%= button_to "Approve", approve_permission_path(permission),method: :patch %><br>
-  <%= button_to "Reject", reject_permission_path(permission),method: :patch %>
+  <%= button_to "Approve", approve_permission_path(permission),method: :patch,class: "btn btn-primary btn-sm mt-2" %><br>
+  <%= button_to "Reject", reject_permission_path(permission),method: :patch,class: "btn btn-primary btn-sm mt-2" %>
   <% end %>
+</div>
 <% end %>
 
 
