@@ -4,4 +4,5 @@ class Book < ApplicationRecord
     belongs_to :user
     has_many :permissions, dependent: :destroy
     has_one_attached :pdf
+    has_one_attached :image
 end

@@ -9,11 +9,24 @@
 #   end
 require 'faker'
 
-10.times do
-  book = Book.create!(
-    title: Faker::Book.title,
-    author: Faker::Book.author,
-    description: Faker::Lorem.paragraph(sentence_count: 3)
+puts "Seeding users and books..."
+
+5.times do
+  user = User.create!(
+    name: Faker::Name.name,
+    number: Faker::PhoneNumber.cell_phone_in_e164,
+    email: Faker::Internet.unique.email,
+    password: "password"
   )
+
+  3.times do
+    Book.create!(
+      title: Faker::Book.title,
+      author: user.name,
+      description: Faker::Lorem.paragraph(sentence_count: 5),
+      user: user
+    )
+  end
 end
-puts "Seeded 10 books with 3 reviews each!"
+
+puts "Done seeding users and books!"

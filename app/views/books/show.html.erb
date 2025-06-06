@@ -1,18 +1,27 @@
-<div class="container">
- <div class="row justify-content-center">
+<div class="container w-100% ">
+
+<% if current_user == @book.user %> 
+<div style="position: relative;">
+  <div style="position: absolute; top: 60px; right: -110px;">
+    <%= link_to "Edit Book", edit_book_path(@book), class: "btn btn-primary mt-2 btn-lg" %>
+  </div>
+</div>
+<% end %>
+ <div class="row justify-content-corner">
    <div class="col-5">
-     <div class="mt-5">
+     <div class="mt-5 pt-3 text-start">
 <h2>Title: <%= @book.title %></h2>
 <h4>Author: <%= @book.author %></h2>
 <h5>Description: <br><%= @book.description %></h2>
 <% if @book.pdf.attached? %>
-  <%= link_to "View PDF", url_for(@book.pdf), target: "_blank"%>
+  <%= link_to "View Book", url_for(@book.pdf), target: "_blank",class: "text-decoration-none",class: "btn btn-primary btn-sm mt-2"   %>
 <% end %>
 
 <br>
 <% if user_signed_in? && current_user != @book.user %>
   <%= render "reviews/form" %> 
 <% end %>
+
 
 <h2>Book Reviews</h2>
 <% @book.reviews.each do |review| %>
@@ -22,17 +31,17 @@
 <% end %>
 
 <% if current_user == @book.user %>
-<%= link_to "Edit Book",edit_book_path,class: "btn btn-primary btn-sm mt-2" %>
 <% @book.permissions.where(status: 'pending').each do |permission| %>
   <h2><b> Pending Requests <b></h2>
   <h4>User: <%= permission.user.email %></h4>
   <%= button_to "Approve", approve_permission_path(permission),method: :patch,class: "btn btn-primary btn-sm mt-2" %><br>
   <%= button_to "Reject", reject_permission_path(permission),method: :patch,class: "btn btn-primary btn-sm mt-2" %>
   <% end %>
-</div>
-<% end %>
+  </div>
+  <% end %>
+ 
 
 
 
 
-
+<!-- ifaram -->
