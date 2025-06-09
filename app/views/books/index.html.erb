@@ -1,8 +1,11 @@
 <%if user_signed_in? %>
 <br>
 <div class="d-flex  align-items mt-5 pt-3">
+
 <div class="bg-dark text-white text-center mx-auto p-1  rounded " style="width: fit-content;" >
-    <h2>Welcome <%= current_user.name %></h5>
+<% if user_signed_in? %>
+    <h2>Welcome <%= current_user.name %></h2>
+<% end %>
 </div>
   <div>
     <%= link_to "Add Book", new_book_path, class: "btn btn-outline-primary btn-lg" %>

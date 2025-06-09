@@ -1,6 +1,8 @@
 <nav class="navbar bg-dark border-bottom border-body fixed-top" data-bs-theme="dark">
   <div class="container-fluid">
-  <a class="navbar-brand" href="#"><b>Book<b></a>
+  <div class="fs-2 text-start">
+  <a class="navbar-brand" href="#"><%= link_to "Book", books_path,class:"text-decoration-none text-white" %></a>
+  </div>
   <% if user_signed_in? %>
     <%= button_to "Log Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete }, class:"btn btn-outline-danger" %>
   <% else %>

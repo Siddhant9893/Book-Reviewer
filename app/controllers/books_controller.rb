@@ -2,7 +2,7 @@ class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:index,:show]
   
   def index
-    @books=Book.includes(:user, :permissions).order(created_at: :desc).page(params[:page]).per(8)
+    @books=Book.includes(:user, :permissions).order(created_at: :desc).page(params[:page]).per(4)
   end
 
   def show

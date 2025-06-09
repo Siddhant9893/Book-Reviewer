@@ -5,4 +5,6 @@ class Book < ApplicationRecord
     has_many :permissions, dependent: :destroy
     has_one_attached :pdf
     has_one_attached :image
+    validates :pdf, presence: true
+    validates :image, presence: true
 end

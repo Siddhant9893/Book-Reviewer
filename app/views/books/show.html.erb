@@ -3,18 +3,23 @@
 <% if current_user == @book.user %> 
 <div style="position: relative;">
   <div style="position: absolute; top: 60px; right: -110px;">
-    <%= link_to "Edit Book", edit_book_path(@book), class: "btn btn-primary mt-2 btn-lg" %>
+    <%= link_to "Edit Book", edit_book_path(@book) , class: "btn btn-primary mt-2 btn-lg" %>
   </div>
 </div>
 <% end %>
+
  <div class="row justify-content-corner">
    <div class="col-5">
-     <div class="mt-5 pt-3 text-start">
+     <div class="mt-5 pt-5 text-start">
 <h2>Title: <%= @book.title %></h2>
 <h4>Author: <%= @book.author %></h2>
-<h5>Description: <br><%= @book.description %></h2>
-<% if @book.pdf.attached? %>
-  <%= link_to "View Book", url_for(@book.pdf), target: "_blank",class: "text-decoration-none",class: "btn btn-primary btn-sm mt-2"   %>
+<h5>Description: <br><p class="text-secondary"><%= @book.description %></h2>
+
+<br><% if @book.pdf.attached? %>
+    <%#= link_to "View Book", url_for(@book.pdf), target: "_blank",class: "text-decoration-none",class: "btn btn-primary btn-sm mt-2"   %>
+    <div class="embed-responsive embed-responsive-21by9">
+      <iframe class="embed-responsive-item"style="width:550px; height:500px;" src="<%= url_for(@book.pdf) %>"></iframe>
+    </div>
 <% end %>
 
 <br>
@@ -39,7 +44,8 @@
   <% end %>
   </div>
   <% end %>
- 
+
+
 
 
 

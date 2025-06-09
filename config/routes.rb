@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get "permissions/create"
-  get "permissions/approve"
-  get "permissions/reject"
+  
   devise_for :users
 resources :books do 
   resources :reviews, only: [ :create]
