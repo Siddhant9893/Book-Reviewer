@@ -41,12 +41,16 @@ class BooksController < ApplicationController
   end
 end
 
-  def destroy
+ def destroy
+  if current_user.admin?
+    @book = Book.find(params[:id])
+  else
     @book = current_user.books.find(params[:id])
-    @book.destroy
-    redirect_to books_path
-
   end
+
+  @book.destroy
+  redirect_to books_path, notice: "Book deleted"
+end
   
   private
   def book_params

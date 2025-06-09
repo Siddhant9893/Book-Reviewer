@@ -1,0 +1,25 @@
+<h1>Admin Dashboard</h1>
+<h2 class="mb-4"><br>All Books</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Email</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @books.each_with_index do |book, index| %>
+      <tr>
+        <th scope="row"><%= index + 1 %></th>
+        <td><%= book.title %></td>
+        <td><%= book.author %></td>
+        <td><%= book.user.email %></td>
+        <td> <%= button_to "Delete", book_path(book), method: :delete, class: "btn btn-sm btn-danger" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

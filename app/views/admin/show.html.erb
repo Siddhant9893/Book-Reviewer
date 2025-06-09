@@ -1,0 +1,10 @@
+<h2>Title: <%= @book.title %></h2>
+<h4>Author: <%= @book.author %></h2>
+<h5>Description: <br><p class="text-secondary"><%= @book.description %></h2>
+
+<h2>Book Reviews</h2>
+<% @book.reviews.each do |review| %>
+    <h4>Rating: <%= review.rating %></h4>
+    <h4>Comment: <%= review.comment %></h4>
+    <br>
+<% end %>

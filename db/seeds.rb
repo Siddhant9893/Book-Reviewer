@@ -29,4 +29,4 @@ puts "Seeding users and books..."
   end
 end
 
-puts "Done seeding users and books!"
+puts "Done seeding users and books!"AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
