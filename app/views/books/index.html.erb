@@ -34,9 +34,9 @@
 <div class="mt-auto p-3">
   <% if user_signed_in? %>
     <% if book.user==current_user %>
-      <%= link_to "View Book", book_path(book) %><br>
+      <%= link_to "View Book", book_path(book),class: "text-decoration-none" %><br>
     <% elsif Permission.exists?(user: current_user, book: book, status: 'approved') %>
-      <%= link_to "View Book", book_path(book) %><hr>
+      <%= link_to "View Book", book_path(book),class: "text-decoration-none" %><hr>
     <% elsif Permission.exists?(user: current_user, book: book, status: 'pending') %>
       <h2 class="text-warning mt-2">Request Pending</h2>
     <% elsif Permission.exists?(user: current_user, book: book, status: 'rejected') %>

@@ -1,10 +1,23 @@
-<h2>Title: <%= @book.title %></h2>
-<h4>Author: <%= @book.author %></h2>
-<h5>Description: <br><p class="text-secondary"><%= @book.description %></h2>
+<br><br><br><div class="d-flex justify-content-end mt-3">
+ <%= button_to "Delete", book_path(@book), method: :delete, class: "btn btn-outline-danger btn-lg" %>
+</div>
 
-<h2>Book Reviews</h2>
-<% @book.reviews.each do |review| %>
-    <h4>Rating: <%= review.rating %></h4>
-    <h4>Comment: <%= review.comment %></h4>
-    <br>
+<h1><%= @book.title %></h1>
+<p><strong>Author:</strong> <%= @book.author %></p>
+<p><strong>Description:</strong> <%= @book.description %></p>
+<p><strong>Uploaded By:</strong> <%= @book.user.email %></p>
+
+<h2 class="mt-4">Book Reviews</h2>
+
+<% if @book.reviews.any? %>
+  <% @book.reviews.each do |review| %>
+      <p><strong>Rating:</strong> <%= review.rating %></p>
+      <p><strong>Comment:</strong> <%= review.comment %></p>
+      <p><small><strong>By:</strong> <%= review.user.email %></small></p>
+  <% end %>
+<% else %>
+  <p>No reviews yet for this book.</p>
 <% end %>
+
+<%= link_to "Back to Admin Dashboard", admin_index_path, class: "btn btn-outline-primary mt-3" %>
+
